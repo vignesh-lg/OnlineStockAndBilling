@@ -74,39 +74,40 @@ namespace StockInventry
         public void GetCustomerDetails(SqlConnection myConnection)
         {
 
-            //CustomerFirstName = ValidCustomerFirstName();
-            //UserName = GenereteUserName();
-            //CustomerSecondName = ValidateCustomerSecondName();
-            //State = ValidateState();
-            //City = ValidateCity();
-            //PermenantAddress = ValidateAddress();
-            //PinCode = ValidatePinCode();
-            //CellNumber = ValidateCellNumber();
-            //Email = ValidateMail();
+            CustomerFirstName = ValidCustomerFirstName();
+            UserName = GenereteUserName();
+            CustomerSecondName = ValidateCustomerSecondName();
+            State = ValidateState();
+            City = ValidateCity();
+            PermenantAddress = ValidateAddress();
+            PinCode = ValidatePinCode();
+            CellNumber = ValidateCellNumber();
+            Email = ValidateMail();
             DateOfBirth = ValidateDateOfBirth();
-            //RegistrationNumber = GenerateRegistrationNumber();
-            //Password = ValidatePassword();
-            //do
-            //{
-            //    Console.WriteLine("Confirm Password : ");
-            //    ConfirmPassword = Console.ReadLine();
-            //    if (Password != ConfirmPassword)
-            //    {
-            //        Console.WriteLine("Password doesn't Match\nRe-Enter the Password : ");
-            //    }
-            //}
-            //while (ConfirmPassword != Password);
+            RegistrationNumber = GenerateRegistrationNumber();
+            Password = ValidatePassword();
+            do
+            {
+                Console.WriteLine("Confirm Password : ");
+                ConfirmPassword = Console.ReadLine();
+                if (Password != ConfirmPassword)
+                {
+                    Console.WriteLine("Password doesn't Match\nRe-Enter the Password : ");
+                }
+            }
+            while (ConfirmPassword != Password);
 
             UserData userData = new UserData(UserName, CustomerFirstName, CustomerSecondName, State, City, PermenantAddress, PinCode, CellNumber, Email, DateOfBirth, RegistrationNumber, Password, ConfirmPassword);
-            string sql = "INSERT INTO UserData(UserName, CustomerFirstName, CustomerSecondName, States, City, PermenantAddress, PinCode, CellNumber, Email, DateOfBirth, RegistrationNumber, Passwords) VALUES ('" + UserName +"','"+
-            CustomerFirstName + "','" + CustomerSecondName + "','" + State + "','" + City + "','" + PermenantAddress + "'," + PinCode + "," + CellNumber + ",'" + Email + "','" + DateOfBirth + "','" + RegistrationNumber + "','" + Password + "')";
+            string sql = "INSERT INTO UserData(UserName, CustomerFirstName, CustomerSecondName, States, City, PermenantAddress, PinCode, CellNumber, Email, DateOfBirth, RegistrationNumber, Passwords) VALUES ('" + UserName + "','" +
+             CustomerFirstName + "','" + CustomerSecondName + "','" + State + "','" + City + "','" + PermenantAddress + "'," + PinCode + "," + CellNumber + ",'" + Email + "','" + DateOfBirth + "','" + RegistrationNumber + "','" + Password + "')";
+
             SqlCommand sqlCommand = new SqlCommand(sql, myConnection);
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
             sqlDataAdapter.InsertCommand = sqlCommand;
             int limit = sqlDataAdapter.InsertCommand.ExecuteNonQuery();
             bool status = AddCustomer(userData);
-            if (status==true && limit >=1 )
-            {
+            if (status==true && limit >=1 ) {
+            
                 Console.WriteLine("Details Added Successfully");
             }
         }
