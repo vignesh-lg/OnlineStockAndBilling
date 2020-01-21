@@ -5,7 +5,7 @@ namespace StockInventry
 {
     class InterfaceHandler : DataBase
     {
-        
+
         internal void InterfaceController()
         {
             try
@@ -33,7 +33,7 @@ namespace StockInventry
                     select = int.Parse(Console.ReadLine());
                 } while (select != 8);
             }
-            catch(OverflowException)
+            catch (OverflowException)
             {
                 Console.WriteLine("Invalid Input..");
                 InterfaceController();
@@ -48,6 +48,6 @@ namespace StockInventry
             //    Console.WriteLine("Invalid Input..");
             //    InterfaceController();
             //}
-        }    
+        }
     }
 }

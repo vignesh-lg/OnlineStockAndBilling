@@ -22,7 +22,7 @@ namespace StockInventry
         }
         public void GetConnection()
         {
-            using (SqlConnection myConnection= new SqlConnection(sqlConnection))
+            using (SqlConnection myConnection = new SqlConnection(sqlConnection))
             {
                 myConnection.Open();
                 if (myConnection != null && myConnection.State == ConnectionState.Closed)
@@ -31,7 +31,9 @@ namespace StockInventry
                 }
                 else
                     Console.WriteLine("Connection Established");
-                GetCustomerDetails(myConnection);
+                //UpdateCustomerDetails(myConnection);
+                //GetCustomerDetails(myConnection);
+                DisplayCustomer(myConnection);
             }
         }
         private bool AddProductList(Product product)
@@ -49,6 +51,19 @@ namespace StockInventry
             if (status)
             {
                 Console.WriteLine("Details Added Successfully");
+            }
+        }
+        public void DisplayCustomer(SqlConnection myConnection)
+        {
+            string sql = "Select * from UserData";
+            
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, myConnection);
+            DataSet dataSet = new DataSet();
+            sqlDataAdapter.Fill(dataSet, "UserData");
+            foreach (DataRow row in dataSet.Tables["UserData"].Rows)
+            {
+                Console.WriteLine(row["UserName"] + "\n" + row["CustomerFirstName"] + "\n" + row["CustomerSecondName"] + "\n" + row["States"] + "\n" + row["City"] + "\n" + row["PermenantAddress"] + "\n" + row["PinCode"] + "\n" + row["CellNumber"] + "\n" + row["Email"] + "\n" + row["DateOfBirth"] + "\n" + row["RegistrationNumber"] + "\n" + row["Passwords"]);
+                Console.WriteLine();
             }
         }
         public void DisplayProduct()
@@ -73,19 +88,32 @@ namespace StockInventry
         }
         public void GetCustomerDetails(SqlConnection myConnection)
         {
-
+            string sql = "INSERT INTO UserData(UserName, CustomerFirstName, CustomerSecondName, States, City, PermenantAddress, PinCode, CellNumber, Email, DateOfBirth, RegistrationNumber, Passwords) VALUES (  @UserName,@CustomerFirstName,  @CustomerSecondName, @State,  @City,  @PermenantAddress  ,@PinCode,  @CellNumber,  @Email,  @DateOfBirth,  @RegistrationNumber,  @Password )";
+            SqlCommand sqlCommand = new SqlCommand(sql, myConnection);
             CustomerFirstName = ValidCustomerFirstName();
+            sqlCommand.Parameters.Add(new SqlParameter("@CustomerFirstName", CustomerFirstName));
             UserName = GenereteUserName();
+            sqlCommand.Parameters.Add(new SqlParameter("@UserName", UserName));
             CustomerSecondName = ValidateCustomerSecondName();
+            sqlCommand.Parameters.Add(new SqlParameter("@CustomerSecondName", CustomerSecondName));
             State = ValidateState();
+            sqlCommand.Parameters.Add(new SqlParameter("@State", State));
             City = ValidateCity();
+            sqlCommand.Parameters.Add(new SqlParameter("@City", City));
             PermenantAddress = ValidateAddress();
+            sqlCommand.Parameters.Add(new SqlParameter("@PermenantAddress", PermenantAddress));
             PinCode = ValidatePinCode();
+            sqlCommand.Parameters.Add(new SqlParameter("@PinCode", PinCode));
             CellNumber = ValidateCellNumber();
+            sqlCommand.Parameters.Add(new SqlParameter("@CellNumber", CellNumber));
             Email = ValidateMail();
+            sqlCommand.Parameters.Add(new SqlParameter("@Email", Email));
             DateOfBirth = ValidateDateOfBirth();
+            sqlCommand.Parameters.Add(new SqlParameter("@DateOfBirth", DateOfBirth));
             RegistrationNumber = GenerateRegistrationNumber();
+            sqlCommand.Parameters.Add(new SqlParameter("@RegistrationNumber", RegistrationNumber));
             Password = ValidatePassword();
+            sqlCommand.Parameters.Add(new SqlParameter("@Password", Password));
             do
             {
                 Console.WriteLine("Confirm Password : ");
@@ -98,16 +126,59 @@ namespace StockInventry
             while (ConfirmPassword != Password);
 
             UserData userData = new UserData(UserName, CustomerFirstName, CustomerSecondName, State, City, PermenantAddress, PinCode, CellNumber, Email, DateOfBirth, RegistrationNumber, Password, ConfirmPassword);
-            string sql = "INSERT INTO UserData(UserName, CustomerFirstName, CustomerSecondName, States, City, PermenantAddress, PinCode, CellNumber, Email, DateOfBirth, RegistrationNumber, Passwords) VALUES ('" + UserName + "','" +
-             CustomerFirstName + "','" + CustomerSecondName + "','" + State + "','" + City + "','" + PermenantAddress + "'," + PinCode + "," + CellNumber + ",'" + Email + "','" + DateOfBirth + "','" + RegistrationNumber + "','" + Password + "')";
 
-            SqlCommand sqlCommand = new SqlCommand(sql, myConnection);
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
-            sqlDataAdapter.InsertCommand = sqlCommand;
-            int limit = sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+            int limit = sqlCommand.ExecuteNonQuery();
             bool status = AddCustomer(userData);
-            if (status==true && limit >=1 ) {
-            
+            if (status == true && limit >= 1)
+            {
+
+                Console.WriteLine("Details Added Successfully");
+            }
+        }
+        public void UpdateCustomerDetails(SqlConnection myConnection)
+        {
+            string sql = " Update UserData Set CustomerFirstName=@CustomerFirstName, CustomerSecondName= @CustomerSecondName,States= @State, City= @City, PermenantAddress= @PermenantAddress  ,PinCode=@PinCode, CellNumber= @CellNumber, Email= @Email,DateOfBirth=  @DateOfBirth, RegistrationNumber= @RegistrationNumber, Passwords= @Password where UserName=@UserName";
+            SqlCommand sqlCommand = new SqlCommand(sql, myConnection);
+            Console.WriteLine("Enter the Customer User Name you want to change");
+            UserName = Console.ReadLine();
+            sqlCommand.Parameters.Add(new SqlParameter("@UserName", UserName));
+            CustomerFirstName = ValidCustomerFirstName();
+            sqlCommand.Parameters.Add(new SqlParameter("@CustomerFirstName", CustomerFirstName));
+           
+            CustomerSecondName = ValidateCustomerSecondName();
+            sqlCommand.Parameters.Add(new SqlParameter("@CustomerSecondName", CustomerSecondName));
+            State = ValidateState();
+            sqlCommand.Parameters.Add(new SqlParameter("@State", State));
+            City = ValidateCity();
+            sqlCommand.Parameters.Add(new SqlParameter("@City", City));
+            PermenantAddress = ValidateAddress();
+            sqlCommand.Parameters.Add(new SqlParameter("@PermenantAddress", PermenantAddress));
+            PinCode = ValidatePinCode();
+            sqlCommand.Parameters.Add(new SqlParameter("@PinCode", PinCode));
+            CellNumber = ValidateCellNumber();
+            sqlCommand.Parameters.Add(new SqlParameter("@CellNumber", CellNumber));
+            Email = ValidateMail();
+            sqlCommand.Parameters.Add(new SqlParameter("@Email", Email));
+            DateOfBirth = ValidateDateOfBirth();
+            sqlCommand.Parameters.Add(new SqlParameter("@DateOfBirth", DateOfBirth));
+            RegistrationNumber = GenerateRegistrationNumber();
+            sqlCommand.Parameters.Add(new SqlParameter("@RegistrationNumber", RegistrationNumber));
+            Password = ValidatePassword();
+            sqlCommand.Parameters.Add(new SqlParameter("@Password", Password));
+            do
+            {
+                Console.WriteLine("Confirm Password : ");
+                ConfirmPassword = Console.ReadLine();
+                if (Password != ConfirmPassword)
+                {
+                    Console.WriteLine("Password doesn't Match\nRe-Enter the Password : ");
+                }
+            }
+            while (ConfirmPassword != Password);
+            int limit = sqlCommand.ExecuteNonQuery();
+            if (limit >= 1)
+            {
+
                 Console.WriteLine("Details Added Successfully");
             }
         }
@@ -225,6 +296,6 @@ namespace StockInventry
                 }
             }
         }
-    }   
+    }
 }
 
