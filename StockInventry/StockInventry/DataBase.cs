@@ -31,8 +31,8 @@ namespace StockInventry
                 }
                 else
                     Console.WriteLine("Connection Established");
-                //UpdateCustomerDetails(myConnection);
-                //GetCustomerDetails(myConnection);
+                UpdateCustomerDetails(myConnection);
+                GetCustomerDetails(myConnection);
                 DisplayCustomer(myConnection);
             }
         }
