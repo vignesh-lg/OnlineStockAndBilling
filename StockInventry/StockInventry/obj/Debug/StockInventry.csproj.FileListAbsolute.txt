@@ -1,0 +1,6 @@
+D:\Visual Studio\StockInventry\StockInventry\bin\Debug\StockInventry.exe.config
+D:\Visual Studio\StockInventry\StockInventry\bin\Debug\StockInventry.exe
+D:\Visual Studio\StockInventry\StockInventry\bin\Debug\StockInventry.pdb
+D:\Visual Studio\StockInventry\StockInventry\obj\Debug\StockInventry.csprojAssemblyReference.cache
+D:\Visual Studio\StockInventry\StockInventry\obj\Debug\StockInventry.exe
+D:\Visual Studio\StockInventry\StockInventry\obj\Debug\StockInventry.pdb
