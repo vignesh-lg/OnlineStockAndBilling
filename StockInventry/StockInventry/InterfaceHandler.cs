@@ -5,7 +5,33 @@ namespace StockInventry
 {
     class InterfaceHandler : DataBase
     {
+        private string UserName1, Password1;
 
+        public void ToLogin()
+        {
+            Console.WriteLine(" User Name :");
+            UserName1 = Console.ReadLine();
+            Console.WriteLine("Password :");
+            Password1 = Console.ReadLine();
+            if (UserName1 == userName && Password1 == password)
+            {
+                AdminFunction();
+            }
+            foreach (UserData userData in customerList)
+            {
+                if (UserName1 == userData.UserName && Password1 == userData.Password)
+                {
+                    CustomerFunction();
+                    break;
+                }
+
+                else
+                {
+                    Console.WriteLine("In-correct UserName or Password\nRe-Enter : ");
+                    ToLogin();
+                }
+            }
+        }
         internal void InterfaceController()
         {
             try

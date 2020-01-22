@@ -18,7 +18,7 @@ namespace StockInventry
             Console.WriteLine("User Name : " + UserName);
             return UserName;//return the username
         }
-        internal string ValidCustomerFirstName()//Validate the Customer FirstName
+        internal string ValidCustomerFirstName()//Validate the User FirstName
         {
             Console.WriteLine("FirstName : ");
             CustomerFirstName = Console.ReadLine();

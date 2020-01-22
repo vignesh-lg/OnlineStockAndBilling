@@ -6,14 +6,49 @@ using System.Threading.Tasks;
 
 namespace StockInventry
 {
-    public class Product
+    public class ProductData
     {
         public string productName { get; set; }
         public string productNumber { get; set; }
-        public Product(string productName,string productNumber)//Parameterized Constructor to get the product inputs
+        public ProductData(string productName,string productNumber)//Parameterized Constructor to get the product inputs
         {
             this.productName = productName;
             this.productNumber = productNumber;
+        }
+    }
+    public class Product : DataBase
+    {
+        private bool AddProductList(ProductData product)
+        {
+            productList.Add(product.productNumber, product);
+            return true;
+        }
+        public void AddProduct()
+        {
+            Console.WriteLine("Product Name : ");
+            string productName = Console.ReadLine();
+            string productNumber = GenerateProductNumber();
+            ProductData product = new ProductData(productName, productNumber);
+            bool status = AddProductList(product);
+            if (status)
+            {
+                Console.WriteLine("Details Added Successfully");
+            }
+        }
+        public void DisplayProduct()
+        {
+            foreach (KeyValuePair<string, ProductData> product in productList)
+            {
+                Console.Write("Employee Name : " + (product.Value).productName + "\n");
+                Console.Write("Employee Number : " + product.Key + "\n");
+            }
+        }
+        public void DeleteProductKey()
+        {
+            Console.WriteLine("Enter the product Number to Delete :");
+            string index = Console.ReadLine();
+            productList.Remove(index);
+            Console.WriteLine("Product Removed..");
         }
     }
 }
