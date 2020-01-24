@@ -7,15 +7,15 @@ using System.Data.SqlClient;
 namespace StockInventry
 {
 
-    public class DataBase : RegistrationValidation
+    public class DataBase : Validation
     {
         public static string userName, password;
-        
-        
-        internal static SortedList<string, ProductData> productList = new SortedList<string, ProductData>();
-        string sqlConnection = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-        public List<UserData> customerList = new List<UserData>();
 
+
+        internal static SortedList<string, ProductData> productList = new SortedList<string, ProductData>();
+        public string sqlConnection = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+        public List<UserData> customerList = new List<UserData>();
+        private int choice;
         static DataBase()
         {
             userName = "Admin";
@@ -91,7 +91,7 @@ namespace StockInventry
                             interfaceHandler.InterfaceController();
                             break;
                     }
-                    Console.WriteLine("*********************Welcome to CUstomer Page*************************");
+                    Console.WriteLine("*********************Welcome to Customer Page*************************");
                     Console.WriteLine("Enter your choice\n1.Display Product\n2.Logout");
                     select = int.Parse(Console.ReadLine());
                 } while (select != 8);
@@ -124,13 +124,21 @@ namespace StockInventry
                 }
                 else
                     Console.WriteLine("Connection Established");
-                int choice = Convert.ToInt32(Console.ReadLine());
-                //customer.GetCustomerDetails(myConnection,choice);
-                customer.DisplayCustomer(myConnection,choice);
+                do
+                {
+                    Console.WriteLine("Enter your Choice :\n1.To Insert\n2. To Update\n3.To Select\n4.To Delete\n5.Log Out");
+                    choice = Convert.ToInt32(Console.ReadLine());
+                   
+                    if (choice == 1 || choice == 2)
+                        customer.GetAndUpdateCustomerDetails(myConnection, choice);
+                    if (choice == 3 || choice == 4)
+                        customer.DisplayAndDeleteCustomer(myConnection, choice);
+                }
+                while (choice != 5);
             }
         }
-        
-       
+
+
     }
 }
 

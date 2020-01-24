@@ -18,6 +18,7 @@ namespace StockInventry
     }
     public class Product : DataBase
     {
+        public string productName, productNumber,productCategory,price,inStock;
         private bool AddProductList(ProductData product)
         {
             productList.Add(product.productNumber, product);
@@ -26,8 +27,8 @@ namespace StockInventry
         public void AddProduct()
         {
             Console.WriteLine("Product Name : ");
-            string productName = Console.ReadLine();
-            string productNumber = GenerateProductNumber();
+            productName = Console.ReadLine();
+            productNumber = GenerateProductNumber();
             ProductData product = new ProductData(productName, productNumber);
             bool status = AddProductList(product);
             if (status)
@@ -49,6 +50,6 @@ namespace StockInventry
             string index = Console.ReadLine();
             productList.Remove(index);
             Console.WriteLine("Product Removed..");
-        }
+        }   
     }
 }

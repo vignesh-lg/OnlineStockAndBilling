@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Data;
+
 namespace StockInventry
 {
     class InterfaceHandler : DataBase
@@ -9,22 +11,30 @@ namespace StockInventry
 
         public void ToLogin()
         {
-            Console.WriteLine(" User Name :");
-            UserName1 = Console.ReadLine();
-            Console.WriteLine("Password :");
-            Password1 = Console.ReadLine();
-            if (UserName1 == userName && Password1 == password)
+            using (SqlConnection myConnection = new SqlConnection(sqlConnection))
             {
-                AdminFunction();
-            }
-            foreach (UserData userData in customerList)
-            {
-                if (UserName1 == userData.UserName && Password1 == userData.Password)
+                myConnection.Open();
+                string query = "User_Procedure_Login";                
+                SqlCommand sqlCommand = new SqlCommand(query, myConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                Console.WriteLine(" User Name :");
+                UserName1 = Console.ReadLine();
+                sqlCommand.Parameters.AddWithValue("@UserName1", UserName1);
+                Console.WriteLine("Password :");
+                Password1 = Console.ReadLine();
+                sqlCommand.Parameters.AddWithValue("@Password1", Password1);
+                DataTable dataTable = new DataTable();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+                sqlDataAdapter.Fill(dataTable);
+                if (UserName1 == userName && Password1 == password)
+                {
+                    GetConnection();
+                }
+               if (dataTable.Rows.Count == 1)
                 {
                     CustomerFunction();
-                    break;
-                }
 
+                }
                 else
                 {
                     Console.WriteLine("In-correct UserName or Password\nRe-Enter : ");

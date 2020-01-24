@@ -42,7 +42,7 @@ namespace StockInventry
     }
     public class User : DataBase
     {
-        public void DisplayCustomer(SqlConnection myConnection,int action)
+        public void DisplayAndDeleteCustomer(SqlConnection myConnection,int action)
         {
             string sql = "User_Procedure";
             SqlCommand sqlCommand = new SqlCommand(sql, myConnection);
@@ -82,7 +82,7 @@ namespace StockInventry
             customerList.Add(user);
             return true;
         }
-        public void GetCustomerDetails(SqlConnection myConnection,int action)
+        public void GetAndUpdateCustomerDetails(SqlConnection myConnection,int action)
         {
            
             string sql = "UserData_Procedure";
@@ -104,7 +104,6 @@ namespace StockInventry
                 CustomerFirstName = ValidCustomerFirstName();
                 sqlCommand.Parameters.AddWithValue("@CustomerFirstName", CustomerFirstName);
             }
-           
             CustomerSecondName = ValidateCustomerSecondName();
             sqlCommand.Parameters.AddWithValue("@CustomerSecondName", CustomerSecondName);
             State = ValidateState();
@@ -146,49 +145,6 @@ namespace StockInventry
                 Console.WriteLine("Details Added Successfully");
             }
         }
-        //public void UpdateCustomerDetails(SqlConnection myConnection)
-        //{
-        //    string sql = "";
-        //    SqlCommand sqlCommand = new SqlCommand(sql, myConnection);
-            
-        //    sqlCommand.Parameters.Add(new SqlParameter("@CustomerFirstName", CustomerFirstName));
-        //    CustomerSecondName = ValidateCustomerSecondName();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@CustomerSecondName", CustomerSecondName));
-        //    State = ValidateState();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@State", State));
-        //    City = ValidateCity();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@City", City));
-        //    PermenantAddress = ValidateAddress();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@PermenantAddress", PermenantAddress));
-        //    PinCode = ValidatePinCode();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@PinCode", PinCode));
-        //    CellNumber = ValidateCellNumber();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@CellNumber", CellNumber));
-        //    Email = ValidateMail();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@Email", Email));
-        //    DateOfBirth = ValidateDateOfBirth();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@DateOfBirth", DateOfBirth));
-        //    RegistrationNumber = GenerateRegistrationNumber();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@RegistrationNumber", RegistrationNumber));
-        //    Password = ValidatePassword();
-        //    sqlCommand.Parameters.Add(new SqlParameter("@Password", Password));
-        //    do
-        //    {
-        //        Console.WriteLine("Confirm Password : ");
-        //        ConfirmPassword = Console.ReadLine();
-        //        if (Password != ConfirmPassword)
-        //        {
-        //            Console.WriteLine("Password doesn't Match\nRe-Enter the Password : ");
-        //        }
-        //    }
-        //    while (ConfirmPassword != Password);
-        //    int limit = sqlCommand.ExecuteNonQuery();
-        //    if (limit >= 1)
-        //    {
-
-        //        Console.WriteLine("Details Added Successfully");
-        //    }
-        //}
     }
 }
 

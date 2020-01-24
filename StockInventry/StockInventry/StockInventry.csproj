@@ -48,7 +48,7 @@
     <Compile Include="DataBase.cs" />
     <Compile Include="InterfaceHandler.cs" />
     <Compile Include="Product.cs" />
-    <Compile Include="RegistrationValidation.cs" />
+    <Compile Include="Validation.cs" />
     <Compile Include="Exception.cs" />
     <Compile Include="Home.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
