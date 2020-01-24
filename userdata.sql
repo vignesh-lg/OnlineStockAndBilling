@@ -15,12 +15,14 @@ create table UserData
    RegistrationNumber varchar(20) not null,
    Passwords varchar(20) not null,  
    Personid int IDENTITY(1000,1)not null primary key,
+      created_at DATETIME NOT NULL
+                DEFAULT CURRENT_TIMESTAMP
 )
 
 INSERT INTO UserData(UserName, CustomerFirstName, CustomerSecondName, States, City, PermenantAddress, PinCode, CellNumber, Email, DateOfBirth, RegistrationNumber, Passwords)
 values('ja','viki','kg','tamilnadu','erode','amman nagar',632198,0987654321,'jgh@gj.com','14/11/1999',25,'SD852963')
 select * from UserData;
---drop table Name.UserData
+--drop table UserData
 CREATE PROCEDURE UserData_Procedure
 	@Action int,
 	@UserName varchar(20) , 
@@ -76,13 +78,24 @@ BEGIN
 END
 Alter PROCEDURE User_Procedure_Login
 	@UserName1 varchar(20), 
-	@Password1 varchar(20)
+	@Password1 varchar(20),
+	@Error varchar(100) out
 AS
 
 BEGIN
+
 	--Login
-            SELECT * from UserData WHERE UserName = @UserName1 and Passwords=@Password1
+	 SELECT * from UserData WHERE UserName = @UserName1 and Passwords=@Password1
+          if exists ( SELECT * from UserData WHERE UserName = @UserName1 and Passwords=@Password1)
+			BEGIN  
+SET @ERROR = @UserName1 + ' Login Successfully'  
+END  
+ELSE  
+BEGIN  
+SET @ERROR = @UserName1 + ' Logined failed Successfully'  
+END  
       END
+	  select * from UserData
 	  --__________________________________________________________________________________--
 
 create table ProductData
@@ -92,7 +105,10 @@ create table ProductData
 	FOREIGN KEY (personid) REFERENCES UserData(Personid),
    ProductName varchar(20) not null, 
    ProductNumber varchar(20) not null,
-)
-Insert into ProductData(OrderID,ProductName,ProductNumber,PersonID) values (1133,'viki','viki',1001)
+   created_at DATETIME NOT NULL
+                DEFAULT CURRENT_TIMESTAMP
+ )  
+Insert into ProductData(OrderID,ProductName,ProductNumber,PersonID) values (1133,'viki','viki',1000)
 select * from ProductData
+
 drop table ProductData

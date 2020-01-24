@@ -23,20 +23,26 @@ namespace StockInventry
                 Console.WriteLine("Password :");
                 Password1 = Console.ReadLine();
                 sqlCommand.Parameters.AddWithValue("@Password1", Password1);
+                sqlCommand.Parameters.Add("@Error", SqlDbType.VarChar, 100);
+                sqlCommand.Parameters["@Error"].Direction = ParameterDirection.Output;
                 DataTable dataTable = new DataTable();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 sqlDataAdapter.Fill(dataTable);
                 if (UserName1 == userName && Password1 == password)
-                {
+                { 
                     GetConnection();
                 }
-               if (dataTable.Rows.Count == 1)
+               else if (dataTable.Rows.Count == 1)
                 {
+                    Console.WriteLine(sqlCommand.Parameters["@Error"].Value);
+                    Console.WriteLine(dataTable.Rows.Count);
                     CustomerFunction();
 
                 }
                 else
                 {
+                    Console.WriteLine(sqlCommand.Parameters["@Error"].Value);
+                    Console.WriteLine(dataTable.Rows.Count);
                     Console.WriteLine("In-correct UserName or Password\nRe-Enter : ");
                     ToLogin();
                 }

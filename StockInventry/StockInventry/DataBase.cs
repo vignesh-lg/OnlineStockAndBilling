@@ -10,8 +10,6 @@ namespace StockInventry
     public class DataBase : Validation
     {
         public static string userName, password;
-
-
         internal static SortedList<string, ProductData> productList = new SortedList<string, ProductData>();
         public string sqlConnection = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
         public List<UserData> customerList = new List<UserData>();
@@ -137,8 +135,6 @@ namespace StockInventry
                 while (choice != 5);
             }
         }
-
-
     }
 }
 
