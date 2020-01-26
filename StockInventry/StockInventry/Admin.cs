@@ -7,6 +7,6 @@ namespace StockInventry
 {
     class Admin : DataBase
     {
-        
+         
     }
 }

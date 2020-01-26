@@ -16,5 +16,5 @@ namespace StockInventry
             interfaceHandler.InterfaceController();//Calling the method from the class using object as reference
             Console.Read();
         }
-    }
+    } 
 }
